@@ -1,5 +1,6 @@
 **Next moves**
-- [ ] Call cyclically with some given interval like 5 minutes
+- [ ] Call cyclically with some given interval like 10 minutes
+  - The website calls each 10 minutes so that's a respectful interval I guess
   - [ ] Host where?
 - [ ] Store data series
 - [ ] Visualize and analyze data
