@@ -4,4 +4,4 @@
   - [ ] Host where?
 - [ ] Store data series
 - [ ] Visualize and analyze data
-- [ ] Move to asyncio with (aiohttp)[https://docs.aiohttp.org/en/stable/]
+- [ ] Move to asyncio with [aiohttp](https://docs.aiohttp.org/en/stable/)
