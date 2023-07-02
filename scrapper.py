@@ -2,11 +2,17 @@ from datetime import datetime, timezone
 
 import requests
 
-from model import ResponseData, GroupData
+from model import GroupData
+
+ResponseData = dict
 
 
-def fetch_groups(url) -> ResponseData:
-    now = datetime.utcnow().replace(tzinfo=timezone.utc)
+def right_now():
+    return datetime.utcnow().replace(microsecond=0, tzinfo=timezone.utc)
+
+
+async def fetch_groups(url) -> ResponseData:
+    now = right_now()
     response = requests.get(url)
     print(f'[ {now} ] {response.status_code}')
 
@@ -37,13 +43,12 @@ def validate(json_data) -> None:
         assert g.get('peopleCount') is not None
 
 
-def collect(url) -> list[GroupData]:
-    now = datetime.utcnow().replace(tzinfo=timezone.utc)
-    timestamp = int(now.timestamp())
-    groups = fetch_groups(url)
+async def collect(url) -> list[GroupData]:
+    now = right_now()
+    groups = await fetch_groups(url)
     return [
         GroupData(
-            time=timestamp,
+            dt=now,
             group=g['serviceGroup'],
             people=g['peopleCount'],
         )
@@ -55,9 +60,4 @@ async def collect_task() -> list[GroupData]:
     host = 'https://api.osir-zoliborz.waw.pl:8443'
     path = 'BxNetRest/rest/people/license/amount'
     url = f'{host}/{path}'
-    return collect(url)
-
-
-# TODO: append entry to a file or a database whatever
-#       just make it stay on disk and make it expandable 
-# (adding new rows should be easy)
+    return await collect(url)

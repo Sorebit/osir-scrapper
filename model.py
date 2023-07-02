@@ -1,11 +1,8 @@
 from dataclasses import dataclass
-from typing import Awaitable
-
+from datetime import datetime
 
 @dataclass
 class GroupData:
-    time: int
+    dt: datetime
     group: str
     people: int
-
-ResponseData = dict
