@@ -1,8 +1,11 @@
 from datetime import datetime, timezone
+
 import requests
 
+from model import RawGroupsData, GroupData
 
-def fetch_groups(url):
+
+def fetch_groups(url) -> dict:
     now = datetime.utcnow().replace(tzinfo=timezone.utc)
     response = requests.get(url)
     print(f'[ {now} ] {response.status_code}')
@@ -23,7 +26,7 @@ def fetch_groups(url):
     return groups
 
 
-def validate(json_data):
+def validate(json_data) -> None:
     """Expects a 1-element list. The sole element should contain serviceGroups"""
     assert type(json_data) == list
     assert len(json_data) == 1
@@ -34,16 +37,27 @@ def validate(json_data):
         assert g.get('peopleCount') is not None
 
 
-def collect(url):
+def collect(url) -> list[GroupData]:
     now = datetime.utcnow().replace(tzinfo=timezone.utc)
+    timestamp = int(now.timestamp())
     groups = fetch_groups(url)
-    return {
-        'time': now.timestamp(),
-        'groups': [{'s': g['serviceGroup'], 'c': g['peopleCount']} for g in groups]
-    }
+    return [
+        GroupData(
+            time=timestamp,
+            group=g['serviceGroup'],
+            people=g['peopleCount'],
+        )
+        for g in groups
+    ]
 
 
-host = 'https://api.osir-zoliborz.waw.pl:8443'
-path = 'BxNetRest/rest/people/license/amount'
-url = f'{host}/{path}'
-print(collect(url))
+async def collect_task() -> list[GroupData]:
+    host = 'https://api.osir-zoliborz.waw.pl:8443'
+    path = 'BxNetRest/rest/people/license/amount'
+    url = f'{host}/{path}'
+    return collect(url)
+
+
+# TODO: append entry to a file or a database whatever
+#       just make it stay on disk and make it expandable 
+# (adding new rows should be easy)
