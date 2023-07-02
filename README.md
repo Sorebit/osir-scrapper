@@ -1,3 +1,8 @@
+**Usage**
+```
+$ python runner.py <out.csv>
+```
+
 **Next moves**
 - [x] Call cyclically with some given interval like 10 minutes
   - The website calls each 10 minutes so that's a respectful interval I guess
