@@ -8,4 +8,4 @@ class GroupData:
     group: str
     people: int
 
-RawGroupsData = dict
+ResponseData = dict

@@ -2,10 +2,10 @@ from datetime import datetime, timezone
 
 import requests
 
-from model import RawGroupsData, GroupData
+from model import ResponseData, GroupData
 
 
-def fetch_groups(url) -> dict:
+def fetch_groups(url) -> ResponseData:
     now = datetime.utcnow().replace(tzinfo=timezone.utc)
     response = requests.get(url)
     print(f'[ {now} ] {response.status_code}')
