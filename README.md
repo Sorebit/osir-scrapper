@@ -1,7 +1,8 @@
 **Next moves**
-- [ ] Call cyclically with some given interval like 10 minutes
+- [x] Call cyclically with some given interval like 10 minutes
   - The website calls each 10 minutes so that's a respectful interval I guess
-  - [ ] Host where?
-- [ ] Store data series
+- [ ] **Host where?**
+- [x] Store data series
 - [ ] Visualize and analyze data
-- [ ] Move to asyncio with [aiohttp](https://docs.aiohttp.org/en/stable/)
+- [.] Move to asyncio
+  - [ ] with [aiohttp](https://docs.aiohttp.org/en/stable/)
