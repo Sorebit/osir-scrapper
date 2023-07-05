@@ -10,8 +10,11 @@ from storage import Storage, CsvStorage
 
 
 async def collect_and_save(storage: Storage) -> None:
-    data = await collect_task()
-    await storage.save(data)
+    try:
+        data = await collect_task()
+        await storage.save(data)
+    except Exception as e:
+        print(e)
 
 
 async def scrape_forever(storage: Storage, minutes) -> None:
