@@ -30,7 +30,7 @@ async def scrape_forever(storage: Storage, minutes) -> None:
 async def main(filename: str, delay: int) -> None:
     background_tasks = set()
     storage = CsvStorage(filename)
-    
+        
     task = asyncio.create_task(scrape_forever(storage, delay))
     background_tasks.add(task)  # this creates a strong reference
     task.add_done_callback(background_tasks.discard)  # Make the task remove itself by destroying the reference
